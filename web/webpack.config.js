@@ -20,6 +20,7 @@ module.exports = {
 		contentBase: path.join(__dirname, 'dist/public'),
 		compress: true,
 		port: 5000,
+		historyApiFallback: true,
 	},
 	module: {
 		rules: [
@@ -68,6 +69,9 @@ module.exports = {
 	resolve: {
 		modules: [path.resolve(__dirname, 'src'), 'node_modules'],
 		extensions: ['.ts', '.tsx', '.js', '.json'],
+		alias: {
+			'@app': path.resolve(__dirname, './src/app'),
+		},
 	},
 	devtool: 'source-map',
 };

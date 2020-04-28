@@ -4,7 +4,16 @@
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"module": "commonjs",
+		"moduleResolution": "node",
 		"target": "es6",
-		"jsx": "react"
-	}
+		"lib": ["es5", "es6", "dom", "esnext"],
+		"jsx": "react",
+		"baseUrl": "./src",
+		"types": ["node"],
+		"paths": {
+			"@app": ["app"],
+			"@app/*": ["app/*"]
+		}
+	},
+	"exclude": ["**/node_modules/*"]
 }

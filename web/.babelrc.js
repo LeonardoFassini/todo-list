@@ -1,4 +1,4 @@
-const presets = ['@babel/react', '@babel/typescript'];
+const presets = ['@babel/react', '@babel/typescript', ['@babel/env', { modules: false }]];
 
 const plugins = [
 	'babel-plugin-styled-components',
