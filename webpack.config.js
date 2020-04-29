@@ -26,7 +26,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules)/,
 				use: {
 					loader: 'babel-loader',
 					options: {
@@ -36,7 +36,7 @@ module.exports = {
 			},
 			{
 				test: /\.ts$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules)/,
 				use: {
 					loader: 'babel-loader',
 					options: {
@@ -46,7 +46,7 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules)/,
 				use: {
 					loader: 'babel-loader',
 					options: {
@@ -56,7 +56,7 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules)/,
 				use: {
 					loader: 'css-loader',
 				},
@@ -74,6 +74,14 @@ module.exports = {
 				test: /\.js$/,
 				loader: 'source-map-loader',
 			},
+			{
+				test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+				loader: 'file-loader',
+				options: {
+					name: '[name].[ext]',
+					outputPath: 'assets/fonts/',
+				},
+			},
 		],
 	},
 	resolve: {
@@ -81,6 +89,7 @@ module.exports = {
 		extensions: ['.ts', '.tsx', '.js', '.json'],
 		alias: {
 			'@app': path.resolve(__dirname, './src/app'),
+			'@atomic': path.resolve(__dirname, './src/atomic'),
 		},
 	},
 	devtool: 'source-map',

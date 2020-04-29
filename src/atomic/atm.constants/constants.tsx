@@ -1,0 +1,44 @@
+export enum Colors {
+  Primary = '#142850',
+  Secondary = '#27496d',
+  Acessory = '#00909e',
+  Neutral = '#dae1e7',
+
+  Gray = '#808080',
+  LightGray = '#A9A9A9',
+  DarkGray = '#696969',
+
+  Alert = '#cc3300',
+  Warning = '#ffcc00',
+  Success = '#339900',
+}
+
+export enum FontSize {
+  XSmall = '12px',
+  Small = '14px',
+  Medium = '16px',
+  Large = '18px',
+  XLarge = '20px',
+}
+
+export enum Spacing {
+  Small = '8px',
+  Medium = '16px',
+  Large = '24px',
+}
+
+export enum BoxShadow {
+  Depht2 = '0 1px 2px, 0',
+  Depht6 = '0 3px 6px 1px',
+  Depht12 = '0 6px 12px 3px',
+}
+
+export enum Border {
+  Color = Colors.Primary,
+  Width = '1px',
+  Radius = '4px',
+}
+
+export enum FontFamily {
+  Primary = 'Montserrat, Helvetica, Arial, sans-serif',
+}

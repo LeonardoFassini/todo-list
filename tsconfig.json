@@ -12,7 +12,9 @@
 		"types": ["node"],
 		"paths": {
 			"@app": ["app"],
-			"@app/*": ["app/*"]
+			"@app/*": ["app/*"],
+			"@atomic": ["atomic"],
+			"@atomic/*": ["atomic/*"]
 		}
 	},
 	"exclude": ["**/node_modules/*"]
