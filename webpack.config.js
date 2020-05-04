@@ -17,10 +17,11 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist/public'),
 	},
 	devServer: {
-		contentBase: path.join(__dirname, 'dist/public'),
 		compress: true,
 		port: 5000,
 		historyApiFallback: true,
+		publicPath: '/',
+		contentBase: false,
 	},
 	module: {
 		rules: [

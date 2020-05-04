@@ -33,12 +33,12 @@ export enum BoxShadow {
   Depht12 = '0 6px 12px 3px',
 }
 
-export enum Border {
-  Color = Colors.Primary,
-  Width = '1px',
-  Radius = '4px',
-}
+export const Border = {
+  Color: Colors.Primary,
+  Width: '1px',
+  Radius: '4px',
+};
 
-export enum FontFamily {
-  Primary = 'Montserrat, Helvetica, Arial, sans-serif',
-}
+export const FontFamily = {
+  Primary: 'Montserrat, sans-serif',
+};
