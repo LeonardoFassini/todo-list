@@ -1,0 +1,48 @@
+import * as React from 'react';
+import { TextInputStyled } from '@atomic/mol.input/text-input.style';
+import { Label } from '@atomic/mol.input/label.component';
+
+interface TextInputProps {
+  onChange: (value: any) => void;
+  type: 'number' | 'password' | 'tel' | 'checkbox' | 'radio' | 'text';
+  onFocus?: () => void;
+  onBlur?: () => void;
+  selected?: boolean;
+  value: any;
+  id: string;
+  label: string;
+}
+
+export const TextInput: React.FC<TextInputProps> = (props) => {
+  const [focused, setFocused] = React.useState(false);
+
+  const onFocus = () => {
+    props.onFocus?.();
+    setFocused(true);
+  };
+
+  const onBlur = () => {
+    props.onBlur?.();
+    setFocused(false);
+  };
+
+  const handleValueChange = (event: React.FormEvent<HTMLInputElement>) => {
+    props.onChange(event.currentTarget.value);
+  };
+
+  return (
+    <>
+      <Label for={props.id} label={props.label} />
+      <TextInputStyled
+        id={props.id}
+        onChange={handleValueChange}
+        type={props.type}
+        checked={props.selected}
+        value={props.value}
+        focused={focused}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+    </>
+  );
+};
