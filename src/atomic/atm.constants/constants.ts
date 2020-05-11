@@ -3,6 +3,7 @@ export enum Colors {
   Secondary = '#27496d',
   Acessory = '#00909e',
   Neutral = '#dae1e7',
+  White = '#ffffff',
 
   Gray = '#808080',
   LightGray = '#A9A9A9',
@@ -37,6 +38,7 @@ export const Border = {
   Color: Colors.Primary,
   Width: '1px',
   Radius: '4px',
+  RadiusLarge: '100px',
 };
 
 export const FontFamily = {
