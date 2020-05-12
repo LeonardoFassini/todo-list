@@ -15,7 +15,9 @@
 			"@app/*": ["app/*"],
 			"@atomic": ["atomic"],
 			"@atomic/*": ["atomic/*"]
-		}
+		},
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true
 	},
 	"exclude": ["**/node_modules/*"]
 }

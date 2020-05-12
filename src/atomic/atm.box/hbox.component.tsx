@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Spacing } from '@atomic/atm.constants';
 
 interface HboxProps {
   fullHeight: boolean;
@@ -19,4 +20,8 @@ Hbox.Item = styled.div`
   flex-direction: column;
   justify-content: ${(props: HboxProps) => props.vAlign ?? 'flex-start'};
   align-items: ${(props: HboxProps) => props.hAlign ?? 'stretch'};
+`;
+
+Hbox.Separator = styled.div`
+  width: ${Spacing.Small};
 `;
