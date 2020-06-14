@@ -5,7 +5,7 @@ import { FlashMessageDispatcherContext } from '@atomic/mol.flash-message/flash-m
 import { FlashMessageStyled, FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style';
 import * as React from 'react';
 
-const TIMEOUT = 1 * 30000;
+const TIMEOUT = 3 * 1000;
 
 export interface Message {
   text: string;
