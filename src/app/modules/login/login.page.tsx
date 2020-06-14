@@ -1,23 +1,52 @@
+import { AuthContext } from '@app/modules/app/auth.provider';
+import { AppPath } from '@app/modules/app/routes/routes-list';
 import { ContentFullHeightStyled } from '@app/modules/login/components/atm.content-full-height';
+import { useLogin } from '@app/modules/login/use-login.hook';
+import { Button } from '@atomic/atm.button/button.component';
+import { ButtonKind } from '@atomic/atm.button/button.style';
 import { Card } from '@atomic/atm.card/card.component';
 import { VSeparator } from '@atomic/atm.separator/separator.style';
 import { H1, Text } from '@atomic/atm.typography';
+import { FlashMessageDispatcherContext } from '@atomic/mol.flash-message/flash-message.provider';
+import { FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style';
+import { Form } from '@atomic/mol.form/form.component';
 import { TextInput } from '@atomic/mol.input/text-input.component';
 import * as React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Col, Grid, Row } from 'react-styled-flexboxgrid';
-import { Form } from '@atomic/mol.form/form.component';
-import { Button } from '@atomic/atm.button/button.component';
-import { ButtonKind } from '@atomic/atm.button/button.style';
 
 export const Login: React.FC = () => {
+  const authContext = React.useContext(AuthContext);
+  const flashMessageDispatcher = React.useContext(FlashMessageDispatcherContext);
+
+  const { logIn, loading, error, data } = useLogin();
   const [loginText, setLoginText] = React.useState('');
   const [passwordText, setPasswordText] = React.useState('');
 
-  const handleSubmit = () => {
-    console.log('submit', 'submit');
+  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    logIn(loginText, passwordText);
   };
 
-  return (
+  React.useEffect(() => {
+    if (!loading) {
+      if (error) {
+        flashMessageDispatcher.dispatchFlashMessage({
+          text: `Usuário ou senha inválidos`,
+          type: FlashMessageTypes.Alert,
+        });
+      } else if (data) {
+        flashMessageDispatcher.dispatchFlashMessage({
+          text: `Bem vindo, ${data}`,
+          type: FlashMessageTypes.Success,
+        });
+      }
+    }
+  }, [loading, error, data, flashMessageDispatcher.dispatchFlashMessage]);
+
+  return authContext.user ? (
+    <Redirect to={AppPath.Todo.Base} />
+  ) : (
     <Grid fluid>
       <Row middle='xs' center='xs'>
         <Col xs={12} md={6} lg={4}>
@@ -26,32 +55,20 @@ export const Login: React.FC = () => {
               <H1>Bem vindo(a) a lista de TODOs</H1>
               <Text>Faça o login para começar</Text>
               <VSeparator />
-              <Form onSubmit={handleSubmit}>
-                <Row>
-                  <Col xs={12}>
-                    <TextInput label='Login' id='loginInput' type='text' onChange={setLoginText} value={loginText} />
-                  </Col>
-                </Row>
+              <Form onSubmit={handleLoginSubmit}>
+                <TextInput label='Login' id='loginInput' type='text' onChange={setLoginText} value={loginText} />
                 <VSeparator small />
-                <Row>
-                  <Col xs={12}>
-                    <TextInput
-                      label='Senha'
-                      id='loginPassword'
-                      type='password'
-                      onChange={setPasswordText}
-                      value={passwordText}
-                    />
-                  </Col>
-                </Row>
+                <TextInput
+                  label='Senha'
+                  id='loginPassword'
+                  type='password'
+                  onChange={setPasswordText}
+                  value={passwordText}
+                />
                 <VSeparator small />
-                <Row>
-                  <Col xs={12}>
-                    <Button type='submit' kind={ButtonKind.RoundedLarge}>
-                      Entrar
-                    </Button>
-                  </Col>
-                </Row>
+                <Button type='submit' kind={ButtonKind.RoundedLarge} loading={loading}>
+                  Entrar
+                </Button>
               </Form>
             </Card>
           </ContentFullHeightStyled>

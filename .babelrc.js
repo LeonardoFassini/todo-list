@@ -1,6 +1,8 @@
 const presets = ['@babel/react', '@babel/typescript', ['@babel/env', { modules: false }]];
 
 const plugins = [
+  ['@babel/plugin-proposal-decorators', { legacy: true }],
+  '@babel/plugin-proposal-class-properties',
   'babel-plugin-styled-components',
   '@babel/plugin-proposal-object-rest-spread',
   '@babel/plugin-proposal-optional-chaining',
