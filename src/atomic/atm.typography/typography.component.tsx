@@ -5,6 +5,7 @@ export const H1 = styled.h1`
   font-family: ${FontFamily.Primary};
   font-size: ${FontSize.Medium};
   color: ${Colors.Secondary};
+  margin: 0;
 `;
 
 export const Text = styled.p`

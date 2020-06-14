@@ -5,7 +5,7 @@ import { FlashMessageDispatcherContext } from '@atomic/mol.flash-message/flash-m
 import { FlashMessageStyled, FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style';
 import * as React from 'react';
 
-const TIMEOUT = 1 * 1000;
+const TIMEOUT = 1 * 30000;
 
 export interface Message {
   text: string;
@@ -29,8 +29,6 @@ export const FlashMessage: React.FC = () => {
     <AnimationStyled active={visible}>
       <FlashMessageStyled type={message?.type} visible={visible}>
         <Hbox>
-          <Hbox.Item></Hbox.Item>
-          <Hbox.Separator />
           <Hbox.Item>
             <Text>{message?.text}</Text>
           </Hbox.Item>

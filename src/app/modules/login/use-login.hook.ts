@@ -1,6 +1,8 @@
 import { AuthContext } from '@app/modules/app/auth.provider';
 import * as React from 'react';
 
+const LOGIN_SECONDS = 2 * 1000;
+
 export const useLogin = () => {
   const authContext = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
@@ -22,7 +24,7 @@ export const useLogin = () => {
       setLoading(false);
       /*eslint-disable-next-line no-console*/
       console.log('loaded!');
-    }, 5000);
+    }, LOGIN_SECONDS);
   };
 
   React.useEffect(() => {
