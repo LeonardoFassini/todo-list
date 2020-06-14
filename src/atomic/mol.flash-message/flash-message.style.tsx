@@ -1,6 +1,5 @@
 import { Border, Colors, Spacing } from '@atomic/atm.constants';
 import * as ColorFn from 'color';
-import * as React from 'react';
 import styled from 'styled-components';
 
 export enum FlashMessageTypes {
@@ -25,14 +24,14 @@ const findMessageColor = (messageType: FlashMessageTypes) => {
 
 interface FlashMessageStyledProps {
   type: FlashMessageTypes;
-  active: boolean;
+  visible: boolean;
 }
 
-export const FlashMessageStyled = styled.div`
-  border-color: ${(props: FlashMessageStyledProps) => findMessageColor(props?.type)};
+export const FlashMessageStyled = styled.div<FlashMessageStyledProps>`
+  border-color: ${(props) => findMessageColor(props?.type)};
   border-style: solid;
   border-width: ${Border.Width};
-  background-color: ${(props: FlashMessageStyledProps) => ColorFn(findMessageColor(props?.type)).lighten(2).string()};
+  background-color: ${(props) => ColorFn(findMessageColor(props?.type)).lighten(2).string()};
   display: flex;
   transition: opacity 0.4s ease-in-out;
   position: fixed;
@@ -41,6 +40,7 @@ export const FlashMessageStyled = styled.div`
   width: 100%;
   padding: ${Spacing.Medium};
   bottom: 0;
+  opacity: ${(props) => (props.visible ? 1 : 0)};
 
   @media (min-width: ${flexboxBreakpoint}) {
     bottom: ${Spacing.Small};

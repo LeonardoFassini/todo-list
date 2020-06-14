@@ -1,3 +1,4 @@
+import { AuthContext } from '@app/modules/app/auth.provider';
 import { AppPath } from '@app/modules/app/routes/routes-list';
 import { ContentFullHeightStyled } from '@app/modules/login/components/atm.content-full-height';
 import { useLogin } from '@app/modules/login/use-login.hook';
@@ -6,17 +7,18 @@ import { ButtonKind } from '@atomic/atm.button/button.style';
 import { Card } from '@atomic/atm.card/card.component';
 import { VSeparator } from '@atomic/atm.separator/separator.style';
 import { H1, Text } from '@atomic/atm.typography';
+import { FlashMessageDispatcherContext } from '@atomic/mol.flash-message/flash-message.provider';
+import { FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style';
 import { Form } from '@atomic/mol.form/form.component';
 import { TextInput } from '@atomic/mol.input/text-input.component';
 import * as React from 'react';
-import { useHistory, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import { Col, Grid, Row } from 'react-styled-flexboxgrid';
-import { AuthContext } from '@app/modules/app/auth.provider';
 
 export const Login: React.FC = () => {
   const authContext = React.useContext(AuthContext);
-  const history = useHistory();
-  const { loading, logIn } = useLogin();
+  const flashMessageDispatcher = React.useContext(FlashMessageDispatcherContext);
+  const { logIn, loading, error, data } = useLogin();
   const [loginText, setLoginText] = React.useState('');
   const [passwordText, setPasswordText] = React.useState('');
 
@@ -24,6 +26,22 @@ export const Login: React.FC = () => {
     e.preventDefault();
     logIn(loginText, passwordText);
   };
+
+  React.useEffect(() => {
+    if (!loading) {
+      if (error) {
+        flashMessageDispatcher.dispatchFlashMessage({
+          text: `Usuário ou senha inválidos`,
+          type: FlashMessageTypes.Alert,
+        });
+      } else if (data) {
+        flashMessageDispatcher.dispatchFlashMessage({
+          text: `Bem vindo, ${data}`,
+          type: FlashMessageTypes.Success,
+        });
+      }
+    }
+  }, [loading, error, data, flashMessageDispatcher.dispatchFlashMessage]);
 
   return authContext.user ? (
     <Redirect to={AppPath.Todo.Base} />
@@ -37,31 +55,19 @@ export const Login: React.FC = () => {
               <Text>Faça o login para começar</Text>
               <VSeparator />
               <Form onSubmit={handleLoginSubmit}>
-                <Row>
-                  <Col xs={12}>
-                    <TextInput label='Login' id='loginInput' type='text' onChange={setLoginText} value={loginText} />
-                  </Col>
-                </Row>
+                <TextInput label='Login' id='loginInput' type='text' onChange={setLoginText} value={loginText} />
                 <VSeparator small />
-                <Row>
-                  <Col xs={12}>
-                    <TextInput
-                      label='Senha'
-                      id='loginPassword'
-                      type='password'
-                      onChange={setPasswordText}
-                      value={passwordText}
-                    />
-                  </Col>
-                </Row>
+                <TextInput
+                  label='Senha'
+                  id='loginPassword'
+                  type='password'
+                  onChange={setPasswordText}
+                  value={passwordText}
+                />
                 <VSeparator small />
-                <Row>
-                  <Col xs={12}>
-                    <Button type='submit' kind={ButtonKind.RoundedLarge}>
-                      Entrar
-                    </Button>
-                  </Col>
-                </Row>
+                <Button type='submit' kind={ButtonKind.RoundedLarge} loading={loading}>
+                  Entrar
+                </Button>
               </Form>
             </Card>
           </ContentFullHeightStyled>

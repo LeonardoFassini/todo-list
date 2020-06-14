@@ -1,27 +1,28 @@
 import { AuthContext } from '@app/modules/app/auth.provider';
-import { FlashMessageDispatcherContext } from '@atomic/mol.flash-message/flash-message.provider';
-import { FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style';
 import * as React from 'react';
 
 export const useLogin = () => {
-  const { dispatchFlashMessage } = React.useContext(FlashMessageDispatcherContext);
   const authContext = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState<string>(null);
+  const [data, setData] = React.useState<string>();
+  const [error, setError] = React.useState(false);
 
   const logIn = (username: string, password: string) => {
+    /*eslint-disable-next-line no-console*/
     console.log('loading...');
     setLoading(true);
     window.setTimeout(() => {
       if (username === 'admin' && password === 'timmy') {
         setData(username);
-        dispatchFlashMessage({ text: `Bem vindo, ${username}`, type: FlashMessageTypes.Success });
+        setError(false);
       } else {
-        dispatchFlashMessage({ text: `Usuário ou senha inválidos`, type: FlashMessageTypes.Alert });
+        setError(true);
+        setData(null);
       }
       setLoading(false);
+      /*eslint-disable-next-line no-console*/
       console.log('loaded!');
-    }, 2000);
+    }, 5000);
   };
 
   React.useEffect(() => {
@@ -30,13 +31,14 @@ export const useLogin = () => {
     }
   }, [loading, data, authContext]);
 
-  const logOut = () => {
+  const logOut = (onComplete: () => void) => {
     setLoading(true);
     window.setTimeout(() => {
-      authContext.logOut();
       setLoading(false);
+      authContext.logOut();
+      onComplete();
     }, 1000);
   };
 
-  return { loading, logIn, logOut };
+  return { loading, error, data, logIn, logOut };
 };

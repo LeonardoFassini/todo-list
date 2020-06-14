@@ -3,7 +3,7 @@ import { Service } from 'typedi';
 @Service()
 export class LocalStorageManager {
   constructor() {
-    this.authLocalStorage = '@authLs';
+    this.authLocalStorage = '@authLS';
   }
 
   private authLocalStorage;

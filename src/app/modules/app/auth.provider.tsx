@@ -15,14 +15,17 @@ export const AuthProvider: React.FC = (props) => {
   const initialUser = authManager.getUser();
   const [user, setuser] = React.useState(initialUser);
 
-  const logIn = (user: string) => {
-    setuser(user);
-    authManager.saveUser(user);
-  };
+  const logIn = React.useCallback(
+    (user: string) => {
+      setuser(user);
+      authManager.saveUser(user);
+    },
+    [authManager],
+  );
 
   const logOut = () => {
+    authManager.removeUser();
     setuser(null);
-    authManager.saveUser(null);
   };
 
   return <AuthContext.Provider value={{ logIn, logOut, user }}>{props.children}</AuthContext.Provider>;

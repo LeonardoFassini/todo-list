@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import * as React from 'react';
 
 const fadeIn = keyframes`
   from {
