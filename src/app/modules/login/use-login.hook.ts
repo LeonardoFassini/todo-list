@@ -39,7 +39,7 @@ export const useLogin = () => {
       setLoading(false);
       authContext.logOut();
       onComplete();
-    }, 1000);
+    }, LOGIN_SECONDS);
   };
 
   return { loading, error, data, logIn, logOut };

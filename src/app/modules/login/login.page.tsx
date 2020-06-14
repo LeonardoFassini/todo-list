@@ -12,12 +12,13 @@ import { FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style
 import { Form } from '@atomic/mol.form/form.component';
 import { TextInput } from '@atomic/mol.input/text-input.component';
 import * as React from 'react';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { Col, Grid, Row } from 'react-styled-flexboxgrid';
 
 export const Login: React.FC = () => {
   const authContext = React.useContext(AuthContext);
   const flashMessageDispatcher = React.useContext(FlashMessageDispatcherContext);
+
   const { logIn, loading, error, data } = useLogin();
   const [loginText, setLoginText] = React.useState('');
   const [passwordText, setPasswordText] = React.useState('');
