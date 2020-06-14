@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { LocalStorageManager } from '@app/services/localstorage-manager.service';
 import * as React from 'react';
 import { Container } from 'typedi';
