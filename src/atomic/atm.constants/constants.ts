@@ -5,9 +5,10 @@ export enum Colors {
   Neutral = '#dae1e7',
   White = '#ffffff',
 
+  DarkGray = '#696969',
   Gray = '#808080',
   LightGray = '#A9A9A9',
-  DarkGray = '#696969',
+  XLightGray = '#d4d4d4',
 
   Alert = '#cc3300',
   Warning = '#ffcc00',

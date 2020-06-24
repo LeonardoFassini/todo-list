@@ -15,3 +15,11 @@ export const Text = styled.p`
   margin: 0;
   padding: 0;
 `;
+
+export const TextSecondary = styled.p`
+  font-family: ${FontFamily.Primary};
+  font-size: ${FontSize.XSmall};
+  color: ${Colors.LightGray};
+  margin: 0;
+  padding: 0;
+`;
