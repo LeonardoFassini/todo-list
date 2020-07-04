@@ -1,13 +1,14 @@
+import { Border, Colors, Spacing } from '@atomic/atm.constants';
+import * as Color from 'color';
 import styled from 'styled-components';
-import { Spacing, Colors, BoxShadow } from '@atomic/atm.constants';
 
 export const TodoItemStyled = styled.div`
   padding: ${Spacing.Small} ${Spacing.Medium};
   background: ${Colors.White};
+  border-radius: ${Border.Radius};
 
   :hover {
-    box-shadow: ${BoxShadow.Depht2};
-    zoom: 1.2;
+    background: ${Color(Colors.XLightGray).lighten(0.07).toString()};
   }
 `;
 

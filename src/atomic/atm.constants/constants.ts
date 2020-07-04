@@ -8,7 +8,7 @@ export enum Colors {
   DarkGray = '#696969',
   Gray = '#808080',
   LightGray = '#A9A9A9',
-  XLightGray = '#d4d4d4',
+  XLightGray = '#e6e6e6',
 
   Alert = '#cc3300',
   Warning = '#ffcc00',

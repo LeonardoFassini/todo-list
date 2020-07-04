@@ -23,8 +23,7 @@ export const Login: React.FC = () => {
   const [loginText, setLoginText] = React.useState('');
   const [passwordText, setPasswordText] = React.useState('');
 
-  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleLoginSubmit = () => {
     logIn(loginText, passwordText);
   };
 
@@ -66,7 +65,7 @@ export const Login: React.FC = () => {
                   value={passwordText}
                 />
                 <VSeparator small />
-                <Button type='submit' kind={ButtonKind.RoundedLarge} loading={loading}>
+                <Button onClick={handleLoginSubmit} type='submit' kind={ButtonKind.RoundedLarge} loading={loading}>
                   Entrar
                 </Button>
               </Form>

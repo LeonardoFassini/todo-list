@@ -5,7 +5,7 @@ import { CheckboxContainerStyled } from './checkbox.style';
 
 interface CheckboxProps {
   checked: boolean;
-  onClick: (checked: boolean) => void;
+  onClick?: (checked: boolean) => void;
   label: string;
 }
 
