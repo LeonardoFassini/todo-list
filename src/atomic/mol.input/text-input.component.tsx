@@ -7,7 +7,6 @@ interface TextInputProps {
   type: 'number' | 'password' | 'tel' | 'checkbox' | 'radio' | 'text';
   onFocus?: () => void;
   onBlur?: () => void;
-  selected?: boolean;
   value: any;
   id: string;
   label: string;
@@ -37,7 +36,6 @@ export const TextInput: React.FC<TextInputProps> = (props) => {
         id={props.id}
         onChange={handleValueChange}
         type={props.type}
-        checked={props.selected}
         value={props.value}
         focused={focused}
         onFocus={onFocus}

@@ -2,7 +2,6 @@ import { Border, Colors, Spacing } from '@atomic/atm.constants';
 import styled from 'styled-components';
 
 interface TextInputStyledProps {
-  checked: boolean;
   focused: boolean;
 }
 

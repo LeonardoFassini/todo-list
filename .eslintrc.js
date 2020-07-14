@@ -1,15 +1,20 @@
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
 
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:react/recommended'],
-  plugins: ['prettier', '@typescript-eslint', 'react'],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:react/recommended",
+  ],
+  plugins: ["prettier", "@typescript-eslint", "react"],
   rules: {
-    'prettier/prettier': 'error',
-    'react/prop-types': 'off',
-    'no-console': 'warn',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
+    "react/display-name": "off",
+    "prettier/prettier": "error",
+    "react/prop-types": "off",
+    "no-console": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
       {
         ignoreRestSiblings: true,
       },
@@ -17,7 +22,7 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 6,
-    sourceType: 'module',
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
