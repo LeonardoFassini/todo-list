@@ -55,7 +55,14 @@ export const Login: React.FC = () => {
               <Text>Faça o login para começar</Text>
               <VSeparator />
               <Form onSubmit={handleLoginSubmit}>
-                <TextInput label='Login' id='loginInput' type='text' onChange={setLoginText} value={loginText} />
+                <TextInput
+                  label='Login'
+                  id='loginInput'
+                  type='text'
+                  onChange={setLoginText}
+                  value={loginText}
+                  dataTest='loginInput'
+                />
                 <VSeparator small />
                 <TextInput
                   label='Senha'
@@ -63,9 +70,16 @@ export const Login: React.FC = () => {
                   type='password'
                   onChange={setPasswordText}
                   value={passwordText}
+                  dataTest='passwordInput'
                 />
                 <VSeparator small />
-                <Button onClick={handleLoginSubmit} type='submit' kind={ButtonKind.RoundedLarge} loading={loading}>
+                <Button
+                  onClick={handleLoginSubmit}
+                  type='submit'
+                  dataTest='submitButton'
+                  kind={ButtonKind.RoundedLarge}
+                  loading={loading}
+                >
                   Entrar
                 </Button>
               </Form>

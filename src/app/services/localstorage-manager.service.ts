@@ -6,7 +6,7 @@ export class LocalStorageManager {
     this.authLocalStorage = '@authLS';
   }
 
-  private authLocalStorage;
+  private authLocalStorage: string;
 
   saveUser = (user: string) => {
     window.localStorage.setItem(this.authLocalStorage, user);

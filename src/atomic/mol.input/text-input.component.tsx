@@ -10,6 +10,7 @@ interface TextInputProps {
   value: any;
   id: string;
   label: string;
+  dataTest?: string;
 }
 
 export const TextInput: React.FC<TextInputProps> = (props) => {
@@ -33,6 +34,7 @@ export const TextInput: React.FC<TextInputProps> = (props) => {
     <>
       <Label for={props.id} label={props.label} />
       <TextInputStyled
+        data-test={props.dataTest}
         id={props.id}
         onChange={handleValueChange}
         type={props.type}

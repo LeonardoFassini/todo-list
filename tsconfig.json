@@ -5,6 +5,7 @@
     "noImplicitAny": true,
     "module": "commonjs",
     "moduleResolution": "node",
+    "experimentalDecorators": true,
     "target": "es6",
     "lib": ["es5", "es6", "dom", "esnext"],
     "jsx": "react",
