@@ -1,3 +1,6 @@
+import { Hbox } from '@atomic/atm.box/hbox.component';
+import { Button } from '@atomic/atm.button/button.component';
+import { ButtonKind } from '@atomic/atm.button/button.style';
 import { Card } from '@atomic/atm.card/card.component';
 import { VSeparator } from '@atomic/atm.separator/separator.style';
 import { H2 } from '@atomic/atm.typography';
@@ -5,12 +8,8 @@ import * as React from 'react';
 import { Col, Grid, Row } from 'react-styled-flexboxgrid';
 
 import { AppHeader } from '../app/app-header/app-header.component';
-import { TodoItem } from './components/mol.todo-item/todo-item.component';
-import { Hbox } from '@atomic/atm.box/hbox.component';
-import { Button } from '@atomic/atm.button/button.component';
-import { ButtonKind } from '@atomic/atm.button/button.style';
-import { TextInput } from '@atomic/mol.input/text-input.component';
 import { CreateTodoForm } from './components/mol.create-todo-form/create-todo-form.component';
+import { TodoItem } from './components/mol.todo-item/todo-item.component';
 
 interface Todo {
   name: string;

@@ -5,11 +5,11 @@ interface TextInputStyledProps {
   focused: boolean;
 }
 
-export const TextInputStyled = styled.input`
+export const TextInputStyled = styled.input<TextInputStyledProps>`
   border-radius: ${Border.Radius};
   border-style: solid;
   border-width: 1px;
-  border-color: ${(props: TextInputStyledProps) => (props.focused ? Colors.Primary : Colors.LightGray)};
+  border-color: ${(props) => (props.focused ? Colors.Primary : Colors.LightGray)};
   width: 100%;
   :focus {
     outline: none;
