@@ -1,9 +1,14 @@
+import { TodoListData, TodoListModel } from '@app/models/todo-list.model';
 import { Hbox } from '@atomic/atm.box/hbox.component';
 import { Button } from '@atomic/atm.button/button.component';
 import { ButtonKind } from '@atomic/atm.button/button.style';
 import { Card } from '@atomic/atm.card/card.component';
 import { VSeparator } from '@atomic/atm.separator/separator.style';
 import { H2 } from '@atomic/atm.typography';
+import { FlashMessageDispatcherContext } from '@atomic/mol.flash-message/flash-message.provider';
+import { FlashMessageTypes } from '@atomic/mol.flash-message/flash-message.style';
+import { LoadingState } from '@atomic/mol.loading-state/loading-state.component';
+import axios from 'axios';
 import * as React from 'react';
 import { Col, Grid, Row } from 'react-styled-flexboxgrid';
 
@@ -11,38 +16,71 @@ import { AppHeader } from '../app/app-header/app-header.component';
 import { CreateTodoForm } from './components/mol.create-todo-form/create-todo-form.component';
 import { TodoItem } from './components/mol.todo-item/todo-item.component';
 
-interface Todo {
-  name: string;
-  description: string;
-  checked: boolean;
-}
-
-const initialTodo: Todo[] = [
-  { name: 'a', description: 'im an a', checked: false },
-  { name: 'b', description: 'im an b', checked: false },
-];
-
 export const Todo: React.FC = () => {
-  const [todos, setTodos] = React.useState<Todo[]>(initialTodo);
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState<TodoListModel>();
+  const [fetchError, setFetchError] = React.useState();
+  const [addError, setAddError] = React.useState();
+  const [removeError, setRemoveError] = React.useState();
+  const [checkError, setCheckError] = React.useState();
   const [creating, setCreating] = React.useState(false);
   const [newTodoName, setNewTodoName] = React.useState('');
   const [newTodoDescription, setNewTodoDescription] = React.useState('');
 
-  const handleTodoItemClick = (name: string, checked: boolean) => {
-    const todosCpy = [...todos];
-    todosCpy.find((todo) => todo.name === name).checked = checked;
-    setTodos(todosCpy);
+  const flashDispatcher = React.useContext(FlashMessageDispatcherContext);
+
+  React.useEffect(() => {
+    axios
+      .get<TodoListModel>(`/todos/list`)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((err) => {
+        if (err.request) {
+          flashDispatcher.dispatchFlashMessage({ text: err.request.statusText, type: FlashMessageTypes.Alert });
+          setFetchError(err);
+        }
+      });
+    setLoading(false);
+  }, []);
+
+  const handleTodoItemClick = async (id: number) => {
+    setLoading(true);
+    try {
+      await axios.post<TodoListModel>(`/todos/check/${id}`).then((response) => {
+        setData(response.data);
+        flashDispatcher.dispatchFlashMessage({ text: 'Adicionado com sucesso', type: FlashMessageTypes.Success });
+      });
+    } catch (err) {
+      flashDispatcher.dispatchFlashMessage({ text: err.request.statusText, type: FlashMessageTypes.Alert });
+      setCheckError(err);
+    }
+    setLoading(false);
   };
 
-  const handleTodoAddClick = () => {
-    if (!todos.find((todo) => todo.name === newTodoName)) {
-      const newTodo: Todo = { name: newTodoName, description: newTodoDescription, checked: false };
-      const todosCpy = [...todos, newTodo];
-      setTodos(todosCpy);
-      setNewTodoName('');
-      setNewTodoDescription('');
-      setCreating(false);
+  const handleTodoAddClick = async () => {
+    setLoading(true);
+    if (!data?.list?.find((todo) => todo.name === newTodoName)) {
+      const newTodo: TodoListData = { name: newTodoName, description: newTodoDescription, done: false };
+      try {
+        await axios.post<TodoListModel>(`/todos/add`, newTodo).then((response) => {
+          setData(response.data);
+          flashDispatcher.dispatchFlashMessage({ text: 'Adicionado com sucesso', type: FlashMessageTypes.Success });
+        });
+        setNewTodoName('');
+        setNewTodoDescription('');
+        setCreating(false);
+      } catch (err) {
+        flashDispatcher.dispatchFlashMessage({ text: err.request.statusText, type: FlashMessageTypes.Alert });
+        setAddError(err);
+      }
+    } else {
+      flashDispatcher.dispatchFlashMessage({
+        text: 'Esse todo já existe. Tente outro nome ou reuse o existente!',
+        type: FlashMessageTypes.Warning,
+      });
     }
+    setLoading(false);
   };
 
   const handleCancelTodoClick = () => {
@@ -51,10 +89,17 @@ export const Todo: React.FC = () => {
     setCreating(false);
   };
 
-  const handleDelete = (name: string) => {
-    const todosCpy = [...todos];
-    const filteredTodos = todosCpy.filter((todo) => todo.name !== name);
-    setTodos(filteredTodos);
+  const handleDelete = async (id: number) => {
+    setLoading(true);
+    try {
+      await axios.post(`/todos/remove/${id}`).then(() => {
+        flashDispatcher.dispatchFlashMessage({ text: 'Adicionado com sucesso', type: FlashMessageTypes.Success });
+      });
+    } catch (err) {
+      flashDispatcher.dispatchFlashMessage({ text: err.request.statusText, type: FlashMessageTypes.Alert });
+      setRemoveError(err);
+    }
+    setLoading(false);
   };
 
   return (
@@ -88,19 +133,36 @@ export const Todo: React.FC = () => {
               )}
             </Hbox>
             <VSeparator small />
-            <Card bordered noGutter>
-              {/* <TodoSearch /> */}
-              {todos.map((todo) => (
-                <TodoItem
-                  onClick={(checked: boolean) => handleTodoItemClick(todo.name, checked)}
-                  onDelete={() => handleDelete(todo.name)}
-                  name={todo.name}
-                  description={todo.description}
-                  checked={todo.checked}
-                  key={todo.name}
-                />
-              ))}
-            </Card>
+            <LoadingState data={!!data} loading={loading} error={fetchError || addError || removeError || checkError}>
+              <LoadingState.Error>
+                <Card bordered>
+                  <H2>Ocorreu um erro.</H2>
+                </Card>
+              </LoadingState.Error>
+              <LoadingState.NoData>
+                <Card bordered>
+                  <H2>Nenhum dado a ser mostrado</H2>
+                </Card>
+              </LoadingState.NoData>
+              <LoadingState.Loading>
+                <Card bordered>
+                  <H2>Carregando...</H2>
+                </Card>
+              </LoadingState.Loading>
+              <Card bordered noGutter>
+                {/* <TodoSearch /> */}
+                {data?.list?.map((todo) => (
+                  <TodoItem
+                    onClick={() => handleTodoItemClick(todo.id)}
+                    onDelete={() => handleDelete(todo.id)}
+                    name={todo.name}
+                    description={todo.description}
+                    checked={todo.done}
+                    key={todo.name}
+                  />
+                ))}
+              </Card>
+            </LoadingState>
           </Col>
         </Row>
       </Grid>

@@ -10,15 +10,17 @@ interface CheckboxProps {
 }
 
 export const Checkbox: React.FC<CheckboxProps> = (props) => {
-  const handleCheckboxClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (e.type === 'click') {
-      props.onClick(!props.checked);
-    }
+  const handleCheckboxClick = () => {
+    props.onClick(!props.checked);
   };
 
   return (
     <CheckboxContainerStyled onClick={handleCheckboxClick}>
-      {props.checked ? <FaIcons.CheckboxChecked /> : <FaIcons.Checkbox />}
+      {props.checked ? (
+        <FaIcons.CheckboxChecked data-test='checkboxChecked' />
+      ) : (
+        <FaIcons.Checkbox data-test='checkboxUnchecked' />
+      )}
     </CheckboxContainerStyled>
   );
 };
