@@ -2,6 +2,12 @@ const presets = ['@babel/react', '@babel/typescript', ['@babel/env', { modules: 
 
 const plugins = [
   ['@babel/plugin-proposal-decorators', { legacy: true }],
+  [
+    '@babel/plugin-transform-runtime',
+    {
+      regenerator: true,
+    },
+  ],
   '@babel/plugin-proposal-class-properties',
   'babel-plugin-styled-components',
   '@babel/plugin-proposal-object-rest-spread',

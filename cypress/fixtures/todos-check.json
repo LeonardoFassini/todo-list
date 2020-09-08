@@ -1,0 +1,10 @@
+{
+  "list": [
+    { "id": 1, "name": "Clear bedroom", "description": "bed and floor", "done": true },
+    { "id": 2, "name": "Wash dishes", "done": true },
+    { "id": 3, "name": "Call mom", "description": "it's her birthday", "done": true },
+    { "id": 4, "name": "Academy", "done": false },
+    { "id": 5, "name": "Run", "done": false },
+    { "id": 6, "name": "Pay bills", "description": "internet bill should be paid today", "done": true }
+  ]
+}

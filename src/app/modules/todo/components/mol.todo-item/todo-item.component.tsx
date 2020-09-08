@@ -11,13 +11,13 @@ interface TodoItemProps {
   name: string;
   description: string;
   checked: boolean;
-  onClick?: (checked: boolean) => void;
+  onClick?: () => void;
   onDelete?: () => void;
 }
 
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
   return (
-    <TodoItemStyled>
+    <TodoItemStyled data-test='todoItem'>
       <Hbox>
         <Hbox.Item noGrow vAlign='center'>
           <Clickable>
@@ -31,7 +31,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         </Hbox.Item>
         <Hbox.Item hAlign='flex-end' vAlign='center'>
           <Clickable>
-            <FaIcons.Close onClick={props.onDelete} />
+            <FaIcons.Close onClick={props.onDelete} data-test='deleteTodo' />
           </Clickable>
         </Hbox.Item>
       </Hbox>
