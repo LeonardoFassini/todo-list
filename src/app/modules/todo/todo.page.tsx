@@ -92,7 +92,8 @@ export const Todo: React.FC = () => {
   const handleDelete = async (id: number) => {
     setLoading(true);
     try {
-      await axios.post(`/todos/remove/${id}`).then(() => {
+      await axios.post(`/todos/remove/${id}`).then((response) => {
+        setData(response.data);
         flashDispatcher.dispatchFlashMessage({ text: 'Adicionado com sucesso', type: FlashMessageTypes.Success });
       });
     } catch (err) {
@@ -115,7 +116,7 @@ export const Todo: React.FC = () => {
               </Hbox.Item>
               {!creating && (
                 <Hbox.Item noGrow>
-                  <Button kind={ButtonKind.Rounded} onClick={() => setCreating(true)}>
+                  <Button kind={ButtonKind.Rounded} onClick={() => setCreating(true)} dataTest='createTodo'>
                     Criar nova tarefa
                   </Button>
                 </Hbox.Item>

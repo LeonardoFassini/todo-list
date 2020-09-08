@@ -26,6 +26,7 @@ export const CreateTodoForm: React.FC<CreateTodoFormProps> = (props) => {
             type='text'
             id='todoName'
             label='Nome do todo'
+            dataTest='todoName'
           />
         </Hbox.Item>
         <Hbox.Separator />
@@ -36,17 +37,18 @@ export const CreateTodoForm: React.FC<CreateTodoFormProps> = (props) => {
             type='text'
             id='todoDescription'
             label='Descrição'
+            dataTest='todoDescription'
           />
         </Hbox.Item>
         <Hbox.Separator />
         <Hbox.Item vAlign='flex-end'>
-          <Button kind={ButtonKind.Rounded} onClick={props.onCancel}>
+          <Button kind={ButtonKind.Rounded} onClick={props.onCancel} dataTest='cancelTodo'>
             Cancelar
           </Button>
         </Hbox.Item>
         <Hbox.Separator />
         <Hbox.Item vAlign='flex-end'>
-          <Button kind={ButtonKind.Rounded} onClick={props.onSubmit}>
+          <Button kind={ButtonKind.Rounded} onClick={props.onSubmit} dataTest='saveTodo'>
             Salvar
           </Button>
         </Hbox.Item>
