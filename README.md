@@ -1,5 +1,7 @@
 This project was made to instuct how to do tests. Also, was used to learn webpack.
 
+Lallalalal
+
 ## Running the app
 
 Open local: `yarn start:dev`
